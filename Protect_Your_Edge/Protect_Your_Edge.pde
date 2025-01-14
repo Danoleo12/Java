@@ -29,7 +29,7 @@ void setup() {
   size (500, 500);
   x = 30 ;
   y = 250 ;
-  cVelX=(int) random(5,5);
+  cVelX=(int) random(10,10);
   cVelY=(int) random(3,5);
 }
 
@@ -79,12 +79,19 @@ void draw(){
    down2 = false;
  }
   
-  //if (count1==10 && x - cSize > x1+rWidth) {
-  //  text ( "You win!", 150, 150);
-  //  textSize(50);
-   // cVelX=0;
-  //  cVelY=0;
-  //}
+  if (count1==50 && x - cSize > x1+rWidth) {
+    text ( "Player1 Wins!", 150, 150);
+    textSize(50);
+    cVelX=0;
+    cVelY=0;
+  }
+  
+  if (count2==50) {
+    text ( "Player2 Wins!", 150, 150);
+    textSize(50);
+    cVelX=0;
+    cVelY=0;
+  }
   // Collision with the up and down edges
   if ( y+cSize>=height || y-cSize<=0){
     cVelY=-cVelY;
