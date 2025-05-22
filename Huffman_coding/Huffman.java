@@ -118,6 +118,27 @@ public class Huffman {
         return Output;
     }
 
+    public static ArrayList<Character> BinaryEncode(char[] Words, String[] Encoder) {
+        ArrayList<Character> Output = new ArrayList<>();
+
+        for (char x : Words) { // For each char in the array
+            if (x == ' ') { // If the char is a space, store it
+                Output.add(' ');
+            } else { // Otherwise, process encoding
+                int index = x - '0'; // Convert character digit to integer index
+
+                if (index >= 0 && index < Encoder.length && Encoder[index] != null) {
+                    String value = Encoder[index];
+
+                    for (char code : value.toCharArray()) {
+                        Output.add(code); // Add each binary char to Output list
+                    }
+                }
+            }
+        }
+        return Output;
+    }
+
     public static ArrayList<Character> Decode(ArrayList<Character> Output, BinaryTree<Pair> huffmanTree){
         ArrayList<Character> Decoded = new ArrayList<>();
         BinaryTree<Pair> current = huffmanTree;  // Start at the root of the tree
@@ -180,28 +201,37 @@ public class Huffman {
 
         String[] Encoder = findEncoding(huffmanTree);
 
-        System.out.print("Enter a line of text (uppercase letters only): ");
-        String  Message = kb.nextLine();
-        char[] Words = Message.toCharArray(); //Converting the string "Message" gotten through the console into an array of Characters
+        System.out.println("Enter 1 to encode a message or 2 to decode");
 
-        //Encoding
-        //Printing the Encoded Message and creating a list of all charcaters in that message
-        System.out.print("Here's the encoded line: ");
-        ArrayList<Character> Output = Encode(Words, Encoder);
-        System.out.println(); 
+        int ans = kb.nextInt();
+        kb.nextLine();
 
-        System.out.println("Would you like the decoded version? Type Yes if so:");
-        String answer = kb.nextLine();
+        if (ans == 1){
+            System.out.print("Enter a line of text (uppercase letters only): ");
+            String  Message = kb.nextLine();
+            char[] Words = Message.toCharArray(); //Converting the string "Message" gotten through the console into an array of Characters
 
-        if (answer.equals("Yes") || answer.equals("yes")){
-            //Decoding
+            //Encoding
+            //Printing the Encoded Message and creating a list of all charcaters in that message
+            System.out.print("Here's the encoded line: ");
+            Encode(Words, Encoder);
+            System.out.println(); 
+        } else if (ans == 2){
+            System.out.print("Enter a line of text (1s, 0s and Spaces characters only): ");
+            String  Message = kb.nextLine();
+
+            char[] Words = Message.toCharArray();
+            ArrayList<Character> Output = BinaryEncode(Words, Encoder);
+
+
+             //Decoding
             ArrayList<Character> Decoded = Decode(Output, huffmanTree);//Created an ArrayList containing all the decoded letters form the encoded message
     
             System.out.println("Decoding:");
             //Display the decode message
             System.out.print("The decoded line is: ");
             for(char code : Decoded) System.out.print(code);
-        } else {
+        }else {
             System.out.println("Thank you. Enjoy your day :)");
         }
 
