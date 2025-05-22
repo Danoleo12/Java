@@ -153,7 +153,7 @@ public class Huffman {
 
         Scanner kb = new Scanner(System.in);
 
-        System.out.print("Enter the name of the file with letters and probability: ");
+        System.out.print("Enter the name of the file with letters and probability: "); // In this case it will be: LettersProbability.txt
         String filePath = kb.nextLine();
 
         File fileName = new File(filePath);
@@ -188,16 +188,22 @@ public class Huffman {
         //Printing the Encoded Message and creating a list of all charcaters in that message
         System.out.print("Here's the encoded line: ");
         ArrayList<Character> Output = Encode(Words, Encoder);
+        System.out.println(); 
 
-        System.out.println();
+        System.out.println("Would you like the decoded version? Type Yes if so:");
+        String answer = kb.nextLine();
 
-        //Decoding
-        ArrayList<Character> Decoded = Decode(Output, huffmanTree);//Created an ArrayList containing all the decoded letters form the encoded message
-        
-
-        //Display the decode message
-        System.out.print("The decoded line is: ");
-        for(char code : Decoded) System.out.print(code);
+        if (answer.equals("Yes") || answer.equals("yes")){
+            //Decoding
+            ArrayList<Character> Decoded = Decode(Output, huffmanTree);//Created an ArrayList containing all the decoded letters form the encoded message
+    
+            System.out.println("Decoding:");
+            //Display the decode message
+            System.out.print("The decoded line is: ");
+            for(char code : Decoded) System.out.print(code);
+        } else {
+            System.out.println("Thank you. Enjoy your day :)");
+        }
 
     }
 
