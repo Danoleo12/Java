@@ -205,6 +205,10 @@ public class Huffman {
             System.out.println("Thank you. Enjoy your day :)");
         }
 
+        file.close();
+
+        kb.close();
+
     }
 
     private static String[] findEncoding(BinaryTree<Pair> bt){ 
