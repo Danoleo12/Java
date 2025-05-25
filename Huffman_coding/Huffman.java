@@ -118,27 +118,6 @@ public class Huffman {
         return Output;
     }
 
-    public static ArrayList<Character> BinaryEncode(char[] Words, String[] Encoder) {
-        ArrayList<Character> Output = new ArrayList<>();
-
-        for (char x : Words) { // For each char in the array
-            if (x == ' ') { // If the char is a space, store it
-                Output.add(' ');
-            } else { // Otherwise, process encoding
-                int index = x - '0'; // Convert character digit to integer index
-
-                if (index >= 0 && index < Encoder.length && Encoder[index] != null) {
-                    String value = Encoder[index];
-
-                    for (char code : value.toCharArray()) {
-                        Output.add(code); // Add each binary char to Output list
-                    }
-                }
-            }
-        }
-        return Output;
-    }
-
     public static ArrayList<Character> Decode(ArrayList<Character> Output, BinaryTree<Pair> huffmanTree){
         ArrayList<Character> Decoded = new ArrayList<>();
         BinaryTree<Pair> current = huffmanTree;  // Start at the root of the tree
@@ -198,6 +177,14 @@ public class Huffman {
 
         //Build our Huffman tree
         BinaryTree<Pair> huffmanTree = HuffmanCoding(ListS);
+        /*
+         *                    Sample of Tree
+         *                          A
+         *                        1/  \0
+         *                         B   c
+         *                       1/\0 1/\0
+         *                       D  E F  G
+         */
 
         String[] Encoder = findEncoding(huffmanTree);
 
@@ -209,7 +196,8 @@ public class Huffman {
         if (ans == 1){
             System.out.print("Enter a line of text (uppercase letters only): ");
             String  Message = kb.nextLine();
-            char[] Words = Message.toCharArray(); //Converting the string "Message" gotten through the console into an array of Characters
+            /*Converting the string "Message" gotten through the console into an array of Characters*/
+            char[] Words = Message.toCharArray();
 
             //Encoding
             //Printing the Encoded Message and creating a list of all charcaters in that message
@@ -220,14 +208,20 @@ public class Huffman {
             System.out.print("Enter a line of text (1s, 0s and Spaces characters only): ");
             String  Message = kb.nextLine();
 
-            char[] Words = Message.toCharArray();
-            ArrayList<Character> Output = BinaryEncode(Words, Encoder);
-
-
+            char[] Code = Message.toCharArray(); // Conerting input into characters
+            ArrayList<Character> Output = new ArrayList<Character>();
+            /*
+             * Our input will be in th form 1100 101111101001010011 00101100111100010101110
+             * Each digit is a direction in our tree (1 for left and 0 for right)
+             * Paste each digit into the Arraylist
+             */
+            for(char x : Code){
+                Output.add(x); 
+            }
              //Decoding
             ArrayList<Character> Decoded = Decode(Output, huffmanTree);//Created an ArrayList containing all the decoded letters form the encoded message
     
-            System.out.println("Decoding:");
+            System.out.println("Decoding...");
             //Display the decode message
             System.out.print("The decoded line is: ");
             for(char code : Decoded) System.out.print(code);
