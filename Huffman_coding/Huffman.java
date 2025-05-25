@@ -152,9 +152,7 @@ public class Huffman {
     public static void main (String[] args) throws FileNotFoundException{
 
         Scanner kb = new Scanner(System.in);
-
-        System.out.print("Enter the name of the file with letters and probability: "); // In this case it will be: LettersProbability.txt
-        String filePath = kb.nextLine();
+        String filePath = "LettersProbability.txt";
 
         File fileName = new File(filePath);
 
