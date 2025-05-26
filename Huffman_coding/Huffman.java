@@ -149,7 +149,7 @@ public class Huffman {
         return Decoded;
     }
     
-    public static void main (String[] args) throws FileNotFoundException{
+    public static void main (String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 
         Scanner kb = new Scanner(System.in);
         String filePath = "LettersProbability.txt";
@@ -175,16 +175,9 @@ public class Huffman {
 
         //Build our Huffman tree
         BinaryTree<Pair> huffmanTree = HuffmanCoding(ListS);
-        /*
-         *                    Sample of Tree
-         *                          A
-         *                        1/  \0
-         *                         B   c
-         *                       1/\0 1/\0
-         *                       D  E F  G
-         */
-
         String[] Encoder = findEncoding(huffmanTree);
+
+        file.close();
 
         System.out.println("Enter 1 to encode a message or 2 to decode");
 
@@ -192,24 +185,49 @@ public class Huffman {
         kb.nextLine();
 
         if (ans == 1){
-            System.out.print("Enter a line of text (uppercase letters only): ");
+            System.out.print("Enter a line of text: ");
             String  Message = kb.nextLine();
             /*Converting the string "Message" gotten through the console into an array of Characters*/
             char[] Words = Message.toCharArray();
+
+            for(int i=0; i<Words.length; i++){
+                char x = Words[i];
+                if(x == Character.toUpperCase(x)){
+                    continue;
+                } else {
+                    x = Character.toUpperCase(x);
+                }
+                Words[i] = x;
+            }
 
             //Encoding
             //Printing the Encoded Message and creating a list of all charcaters in that message
             System.out.print("Here's the encoded line: ");
             Encode(Words, Encoder);
             System.out.println(); 
+            kb.close();
         } else if (ans == 2){
             System.out.print("Enter a line of text (1s, 0s and Spaces characters only): ");
             String  Message = kb.nextLine();
 
-            char[] Code = Message.toCharArray(); // Conerting input into characters
+            char[] Code = Message.toCharArray(); // Converting input into character
+
+            for(char x : Code){  
+                /*
+                 * This is to check if the user enters invalid character
+                 * If the user enters invalid character (a for example), The code will 
+                 * Print a message, then throw an error
+                 */
+                if (x != '1' && x != '0' && x != (' ')){
+                    System.out.println("Invalid character " + x + " Please only enter 1s, 0s, and Spaces");
+                    kb.close();
+                    throw new UnsupportedEncodingException ();
+                }
+            }
+
             ArrayList<Character> Output = new ArrayList<Character>();
             /*
-             * Our input will be in th form 1100 101111101001010011 00101100111100010101110
+             * Our input will be in th form 1100 1011
              * Each digit is a direction in our tree (1 for left and 0 for right)
              * Paste each digit into the Arraylist
              */
@@ -223,12 +241,12 @@ public class Huffman {
             //Display the decode message
             System.out.print("The decoded line is: ");
             for(char code : Decoded) System.out.print(code);
+
+            kb.close();
         }else {
             System.out.println("Thank you. Enjoy your day :)");
+            kb.close();
         }
-
-        file.close();
-
         kb.close();
 
     }
