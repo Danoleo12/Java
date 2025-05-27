@@ -63,6 +63,12 @@ public class Huffman {
             }
         }
 
+        buildTree(ListT);
+
+        return ListT.get(0);
+    }
+
+    private static void buildTree(ArrayList<BinaryTree<Pair>> ListT) {
         while(ListT.size()>1){
             Random random = new Random();
 
@@ -91,8 +97,6 @@ public class Huffman {
                 ListT.add(P);
             }
         }
-
-        return ListT.get(0);
     }
 
     public static ArrayList<Character> Encode(char[] Words, String[] Encoder){
