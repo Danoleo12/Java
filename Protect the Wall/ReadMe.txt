@@ -16,3 +16,4 @@ This code display a rectangle (paddle) and a ball and keeps count of the score
 	The game ends in two cases
 		The score gets to 50 and the player loses
 		The ball gets stuck behind the paddle
+	If the game end, re-run the code to start again
